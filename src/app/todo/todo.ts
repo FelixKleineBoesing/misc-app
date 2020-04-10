@@ -3,9 +3,9 @@
 export class ToDo {
     id: number;
     title: string;
-    text: string;
+    fullText: string;
 
-    constructor(values: Object = {}) {
+    constructor(values: object = {}) {
         Object.assign(this, values);
     }
 }

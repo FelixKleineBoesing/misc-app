@@ -1,0 +1,21 @@
+mat-sidenav mat-icon {
+    margin-right: 12px;
+  }
+  .hamburger {
+    margin-top: 5px;
+    cursor: pointer;
+  }
+  .mat-radio-button,
+  .mat-radio-group {
+    margin-right: 25px;
+  }
+  .controlers-wrapper > * {
+    width: 100%;
+    padding: 0;
+  }
+  .misc-bottom-padding {
+    margin: 8px 0 10px;
+  }
+  .misc-bottom-padding mat-label {
+    margin-right: 15px;
+  }

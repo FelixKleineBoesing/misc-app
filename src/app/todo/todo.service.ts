@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { HttpHeaders, HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { ToDo } from './todo';
 
 @Injectable({
   providedIn: 'root'
@@ -17,14 +18,14 @@ export class TodoService {
     let API_URL = `${this.endpoint}/get-todos`;
     return this.http.get(API_URL).pipe(
       catchError(this.errorMgmt)
-    );
+      );
   }
 
   GetTodo(id): Observable<any> {
     let API_URL = `${this.endpoint}/get-todo/${id}`;
     return this.http.get(API_URL).pipe(
       map((res: Response) => {
-        return res || {}
+        return new ToDo(res);
       }),
       catchError(this.errorMgmt)
     );
