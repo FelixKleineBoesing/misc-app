@@ -47,13 +47,8 @@ export class TodoComponent implements OnInit {
     this.priorities = []
     for (const value in Priority) {
       if (! isNaN(Number(value))) {
-        console.log(typeof value);
-        console.log(typeof Priority[value]);
-        console.log(Priority[value]);
         this.priorities.push(Priority[value]);
       }
     }
-    console.log(this.priorities);
-
   }
 }
