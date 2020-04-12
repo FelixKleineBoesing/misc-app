@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ToDo, Priority } from './todo';
 import { TodoService } from './todo.service';
 import { ValueConverter } from '@angular/compiler/src/render3/view/template';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-todo',
@@ -15,7 +16,8 @@ export class TodoComponent implements OnInit {
   Math: any;
   priorities: string[];
   
-  constructor(private todoApi: TodoService) { }
+  constructor(public fb: FormBuilder,
+              private todoApi: TodoService) { }
 
   ngOnInit(): void {
     this.getTodos();
