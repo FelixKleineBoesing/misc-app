@@ -1,3 +1,66 @@
-mat-card {
+.note-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
+  
+.input-full-width {
+    width: 100%;
     margin-bottom: 10px;
 }
+
+mat-card {
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+quill-editor {
+    display: block;
+  }
+  
+  .ql-editor:focus {
+    border: 1px solid #80bdff !important;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25) !important;
+  }
+  
+  .ng-invalid {
+    border: 1px dashed red;
+  }
+  
+  /* Set dropdown font-families */
+  
+  [quill-editor-toolbar] .ql-font span[data-label="Aref Ruqaa"]::before {
+    font-family: "Aref Ruqaa";
+  }
+  
+  [quill-editor-toolbar] .ql-font span[data-label="Mirza"]::before {
+    font-family: "Mirza";
+  }
+  
+  [quill-editor-toolbar] .ql-font span[data-label="Roboto"]::before {
+    font-family: "Roboto";
+  }
+  
+  /* Set content font-families */
+  
+  .ql-font-mirza {
+    font-family: "Mirza";
+  }
+  
+  .ql-font-aref {
+    font-family: "Aref Ruqaa";
+  }
+  
+  .ql-font-roboto {
+    font-family: "Roboto";
+  }
+  
+  pre {
+    background-color: #fcfcfc;
+    padding: 5px;
+    border: 1px solid #b2b2b2;
+    color: #363030;
+  }
+
+
+  

@@ -1,7 +1,7 @@
 <mat-sidenav-container class="todo-sidenav">
     <mat-sidenav mode="side" opened>
         <div class="todo-overview-cards">
-            <mat-card *ngFor="let todo of todos" >
+            <mat-card *ngFor="let todo of todos" (click)="updateOpenNote(todo.id)">
                 <mat-card-title>{{todo.title}}</mat-card-title>
                 <mat-card-content>{{todo.fullText.substring(0, Math.min(todo.fullText.length, 50))}}</mat-card-content>
                 <mat-card-actions>
@@ -10,5 +10,19 @@
             </mat-card>
         </div>
     </mat-sidenav>
-    <mat-sidenav-content>Main content</mat-sidenav-content>
+    <mat-sidenav-content>
+        <form class="note-form">
+            <mat-form-field class="input-full-width">
+                <mat-label>Title</mat-label>
+                <input matInput value="">
+            </mat-form-field>
+            <mat-form-field class="input-full-width">
+                <mat-label>Priority</mat-label>
+                <mat-select [(value)]="todos[activeTodo].priority">
+                    <mat-option *ngFor="let priority of priorities" [value]="priority">{{priority}}</mat-option>  
+                </mat-select>
+            </mat-form-field>
+        </form>
+        <quill-editor></quill-editor>
+    </mat-sidenav-content>   
   </mat-sidenav-container>
