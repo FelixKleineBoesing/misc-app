@@ -9,6 +9,10 @@
     margin-bottom: 10px;
 }
 
+mat-sidenav {
+    width: 250px
+}
+
 mat-card {
     margin-bottom: 10px;
     cursor: pointer;
@@ -61,6 +65,3 @@ quill-editor {
     border: 1px solid #b2b2b2;
     color: #363030;
   }
-
-
-  

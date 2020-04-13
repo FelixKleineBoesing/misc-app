@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ToDo, Priority } from './todo';
 import { TodoService } from './todo.service';
 import { ValueConverter } from '@angular/compiler/src/render3/view/template';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
+
 
 @Component({
   selector: 'app-todo',
@@ -15,26 +16,59 @@ export class TodoComponent implements OnInit {
   activeTodo: number;
   Math: any;
   priorities: string[];
-  
+  noteForm: FormGroup;
+
   constructor(public fb: FormBuilder,
-              private todoApi: TodoService) { }
+              private todoApi: TodoService) {
+                this.createFormGroup();
+              }
 
   ngOnInit(): void {
     this.getTodos();
-    this.getAllPriorities()
+    this.getAllPriorities();
     this.Math = Math;
+    this.createFormGroup(this.todos[0]);
+  }
+
+  onChanges(): void {
+    this.noteForm.valueChanges.subscribe(val => {
+      console.log(val);
+    })
+  }
+
+  createFormGroup(todo: ToDo = new ToDo()): void {
+    this.noteForm = this.fb.group({
+      ToDo: this.fb.group(todo), options: {updateOn: 'change'}
+    })
+    this.onChanges();
+  }
+
+  resetForm() {
+    this.noteForm.reset({ToDo: new ToDo()});
+  }
+
+  deleteToDo(id) {
+    console.log("deleteToDo Comp");
+    this.todoApi.deleteTodo(id);
+    this.getTodos();
+    this.createFormGroup();
+  }
+
+  getTodos() {
+    this.todoApi.getTodos().subscribe(data => {
+      this.todos = data;
+    });
+    if (this.todos.length === 0) {
+      this.activeTodo = null;
+    } else {
+      this.activeTodo = this.todos[0].id;
+    }
   }
   
-  getTodos() {
-    /* this.todoApi.GetTodos().subscribe(data => {
-      this.todos = data;
-    }); */
-    // mocked TODOs for now
-    this.todos = [
-      new ToDo({id: 1, title: 'Einkaufszettel', fullText: '2 Eier, 3 Äpfel, 5 Liter Milch'}), 
-      new ToDo({id: 2, title: 'Projekte', fullText: 'Felix misc app, AI Techlabs, Dota 2 Analytics'})
-    ]
-    this.activeTodo = 1;
+  addToDo() {
+    this.todoApi.addTodo().subscribe(data => {
+      const id = data["id"];
+    })
   }
 
   updateOpenNote(id: number) {
@@ -43,6 +77,7 @@ export class TodoComponent implements OnInit {
         this.activeTodo = index;
       }
     });
+    this.createFormGroup(this.todos[this.activeTodo]);
   }
 
   getAllPriorities() {

@@ -1,37 +1,41 @@
 <mat-sidenav-container class="todo-sidenav">
     <mat-sidenav mode="side" opened>
         <div class="todo-overview-cards">
+            <button mat-button class="add-button" (click)="addToDo()">
+                <mat-icon class="add-button-icon">add</mat-icon> 
+            </button>
             <mat-card *ngFor="let todo of todos" (click)="updateOpenNote(todo.id)">
                 <mat-card-title>{{todo.title}}</mat-card-title>
                 <mat-card-content>{{todo.fullText.substring(0, Math.min(todo.fullText.length, 50))}}</mat-card-content>
                 <mat-card-actions>
-                    <button mat-button><mat-icon>delete</mat-icon></button>
+                    <button mat-button (click)="deleteToDo(todo.id)"><mat-icon class btnText>delete</mat-icon></button>
                 </mat-card-actions>
             </mat-card>
         </div>
     </mat-sidenav>
     <mat-sidenav-content>
-        <form class="note-form">
-            <mat-form-field class="input-full-width">
-                <mat-label>Title</mat-label>
-                <input matInput value="">
-            </mat-form-field>
-            <mat-form-field class="input-full-width">
-                <mat-label>Priority</mat-label>
-                <mat-select [(value)]="todos[activeTodo].priority">
-                    <mat-option *ngFor="let priority of priorities" [value]="priority">{{priority}}</mat-option>
-                    <mat-option [value]="None">{{None}}</mat-option>
-                </mat-select>
-            </mat-form-field>
-            <mat-form-field>
-                <mat-label>Choose a date</mat-label>
-                <input matInput [matDatepicker]="picker">
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
-            <mat-checkbox>Resolved!</mat-checkbox>
-            
-        </form>
-        <quill-editor></quill-editor>
+        <form class="note-form" [formGroup]="noteForm">
+            <div formGroupName="ToDo">
+                <mat-form-field class="input-full-width">
+                    <mat-label>Title</mat-label>
+                    <input matInput value="" formControlName="title">
+                </mat-form-field>
+                <mat-form-field class="input-full-width">
+                    <mat-label>Priority</mat-label>
+                    <mat-select formControlName="priority">
+                        <mat-option *ngFor="let priority of priorities" [value]="priority">{{priority}}</mat-option>
+                        <mat-option>None</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Choose a date</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="dueTo">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                <mat-checkbox formControlName="resolved">Resolved!</mat-checkbox>
+            <quill-editor formControlName="fullText"></quill-editor>
+        </div>
+    </form>
     </mat-sidenav-content>   
   </mat-sidenav-container>
