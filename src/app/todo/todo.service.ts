@@ -25,7 +25,7 @@ export class TodoService {
     return this.http.get(API_URL).pipe(
       catchError(this.errorMgmt)
       ); */
-    return of(this.todos)
+    return of(this.todos);
   }
 
   addTodo(): Observable<any> {
@@ -40,18 +40,23 @@ export class TodoService {
     return of(todo)
   }
 
-  editTodo(todoChange: ToDo) {
+  editTodo(todoChange: ToDo): void {
+    console.log("edit comp");
     if (this.todos.length > 0) {
+      console.log("edit comp");
       let found: boolean = false;
       let i: number = 0;
       while (! found) {
+        console.log(i);
         if (todoChange.id === this.todos[i].id) {
           found = true;
           this.todos[i] = todoChange;
         }
-        found = i === this.todos.length ? true : false;
+        found = i === this.todos.length - 1 ? true : false;
+        i++;
       }
     }
+    console.log("edit comp")
   }
 
   getTodo(id): Observable<any> {

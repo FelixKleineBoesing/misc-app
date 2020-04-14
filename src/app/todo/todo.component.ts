@@ -27,12 +27,16 @@ export class TodoComponent implements OnInit {
     this.getTodos();
     this.getAllPriorities();
     this.Math = Math;
-    this.createFormGroup(this.todos[0]);
   }
 
   onChanges(): void {
-    this.noteForm.valueChanges.subscribe(val => {
-      console.log(val);
+    console.log("onChanges")
+    this.noteForm.valueChanges.subscribe(todo => {
+      console.log(todo.ToDo);
+      this.todoApi.editTodo(todo.ToDo);
+      console.log("edited");
+      this.editTodo(todo.ToDo);
+      console.log("edited in comp");
     })
   }
 
@@ -44,31 +48,54 @@ export class TodoComponent implements OnInit {
   }
 
   resetForm() {
-    this.noteForm.reset({ToDo: new ToDo()});
+    this.noteForm.reset();
   }
 
-  deleteToDo(id) {
-    console.log("deleteToDo Comp");
-    this.todoApi.deleteTodo(id);
-    this.getTodos();
-    this.createFormGroup();
+  deleteToDo(id: number) {
+    let i: number = null;
+    this.todos.forEach((value, index) => {
+      if (id === value.id) {
+        i = index;
+      }
+    });
+    this.todos.splice(i, 1);
+    this.resetForm();
   }
 
   getTodos() {
-    this.todoApi.getTodos().subscribe(data => {
+    this.todoApi.getTodos().toPromise().then(data => {
+      console.log(data);
       this.todos = data;
+      this.activeTodo = this.todos.length === 0 ? null : this.todos[0].id;
+      this.createFormGroup(this.todos[0]);
+    }).catch(data => {
+      console.log(data);
     });
-    if (this.todos.length === 0) {
-      this.activeTodo = null;
-    } else {
-      this.activeTodo = this.todos[0].id;
-    }
   }
-  
+
   addToDo() {
-    this.todoApi.addTodo().subscribe(data => {
-      const id = data["id"];
-    })
+    this.todoApi.addTodo().toPromise()
+    .then(todo => {
+      console.log(todo);
+      console.log(this.todos);
+      this.todos.unshift(todo);
+      console.log(this.todos);
+    });
+  }
+
+  editTodo(todoChange: ToDo) {
+    if (this.todos.length > 0) {
+      let found: boolean = false;
+      let i: number = 0;
+      while (! found) {
+        if (todoChange.id === this.todos[i].id) {
+          found = true;
+          this.todos[i] = todoChange;
+        }
+        found = i === this.todos.length ? true : false;
+        i++;
+      } 
+    }
   }
 
   updateOpenNote(id: number) {
