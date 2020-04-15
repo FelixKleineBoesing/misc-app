@@ -12,38 +12,34 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 })
 export class TodoComponent implements OnInit {
 
-  todos: ToDo[];
+  todos: ToDo[] = [];
   activeTodo: number;
   Math: any;
-  priorities: string[];
+  priorityKeys: string[];
   noteForm: FormGroup;
+  priority = Priority;
+  cardStringLength = 50;
 
   constructor(public fb: FormBuilder,
               private todoApi: TodoService) {
-                this.createFormGroup();
+                this.priorityKeys = Object.keys(this.priority).filter(k => !isNaN(Number(k)));
               }
 
   ngOnInit(): void {
     this.getTodos();
-    this.getAllPriorities();
     this.Math = Math;
   }
 
   onChanges(): void {
-    console.log("onChanges")
     this.noteForm.valueChanges.subscribe(todo => {
-      console.log(todo.ToDo);
-      this.todoApi.editTodo(todo.ToDo);
-      console.log("edited");
       this.editTodo(todo.ToDo);
-      console.log("edited in comp");
-    })
+    });
   }
 
-  createFormGroup(todo: ToDo = new ToDo()): void {
+  createFormGroup(todo: ToDo): void {
     this.noteForm = this.fb.group({
       ToDo: this.fb.group(todo), options: {updateOn: 'change'}
-    })
+    });
     this.onChanges();
   }
 
@@ -51,36 +47,41 @@ export class TodoComponent implements OnInit {
     this.noteForm.reset();
   }
 
-  deleteToDo(id: number) {
-    let i: number = null;
-    this.todos.forEach((value, index) => {
-      if (id === value.id) {
-        i = index;
-      }
+  deleteToDo(id: string) {
+    let i: number = 0;
+    this.todoApi.deleteTodo(id).toPromise().then(val => {
+      this.todos.forEach((value, index) => {
+        if (id === value._id) {
+          i = index;
+        }
+      });
+      this.todos.splice(i, 1);
+      this.resetForm();
     });
-    this.todos.splice(i, 1);
-    this.resetForm();
   }
 
   getTodos() {
     this.todoApi.getTodos().toPromise().then(data => {
-      console.log(data);
       this.todos = data;
-      this.activeTodo = this.todos.length === 0 ? null : this.todos[0].id;
-      this.createFormGroup(this.todos[0]);
+      this.activeTodo = this.todos.length === 0 ? null : 0;
+      if (this.todos.length > 0) {
+        this.createFormGroup(this.todos[0]);
+      }
     }).catch(data => {
       console.log(data);
     });
   }
 
   addToDo() {
+    console.log('adding');
     this.todoApi.addTodo().toPromise()
     .then(todo => {
       console.log(todo);
-      console.log(this.todos);
       this.todos.unshift(todo);
-      console.log(this.todos);
-    });
+      this.createFormGroup(todo);
+    }).catch(val => {
+      console.log(val);
+    })
   }
 
   editTodo(todoChange: ToDo) {
@@ -88,31 +89,30 @@ export class TodoComponent implements OnInit {
       let found: boolean = false;
       let i: number = 0;
       while (! found) {
-        if (todoChange.id === this.todos[i].id) {
+        if (todoChange._id === this.todos[i]._id) {
           found = true;
           this.todos[i] = todoChange;
         }
-        found = i === this.todos.length ? true : false;
+        found = i === this.todos.length - 1 ? true : false;
         i++;
-      } 
+      }
     }
+    this.todoApi.editTodo(todoChange).toPromise().then(val => {
+    }).catch(val => {
+      console.log(val);
+    })
   }
 
-  updateOpenNote(id: number) {
+  updateOpenNote(id: string) {
     this.todos.forEach((value, index) => {
-      if (id === value.id) {
+      if (id === value._id) {
         this.activeTodo = index;
       }
     });
     this.createFormGroup(this.todos[this.activeTodo]);
   }
 
-  getAllPriorities() {
-    this.priorities = []
-    for (const value in Priority) {
-      if (! isNaN(Number(value))) {
-        this.priorities.push(Priority[value]);
-      }
-    }
+  getSubStringForCard(text: string) {
+    return text.substring(0, Math.min(text.length, this.cardStringLength)).replace(/<[^>]*>/g, '');
   }
 }

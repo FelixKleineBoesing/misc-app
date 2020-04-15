@@ -4,16 +4,16 @@
             <button mat-button class="add-button" (click)="addToDo()">
                 <mat-icon class="add-button-icon">add</mat-icon> 
             </button>
-            <mat-card *ngFor="let todo of todos" (click)="updateOpenNote(todo.id)">
+            <mat-card *ngFor="let todo of todos" (click)="updateOpenNote(todo._id)">
                 <mat-card-title>{{todo.title}}</mat-card-title>
-                <mat-card-content>{{todo.fullText.substring(0, Math.min(todo.fullText.length, 50))}}</mat-card-content>
+                <mat-card-content>{{getSubStringForCard(todo.fullText)}}</mat-card-content>
                 <mat-card-actions>
-                    <button mat-button (click)="deleteToDo(todo.id)"><mat-icon class btnText>delete</mat-icon></button>
+                    <button mat-button (click)="deleteToDo(todo._id)"><mat-icon class btnText>delete</mat-icon></button>
                 </mat-card-actions>
             </mat-card>
         </div>
     </mat-sidenav>
-    <mat-sidenav-content>
+    <mat-sidenav-content *ngIf="todos.length > 0">
         <form class="note-form" [formGroup]="noteForm">
             <div formGroupName="ToDo">
                 <mat-form-field class="input-full-width">
@@ -23,7 +23,7 @@
                 <mat-form-field class="input-full-width">
                     <mat-label>Priority</mat-label>
                     <mat-select formControlName="priority">
-                        <mat-option *ngFor="let priority of priorities" [value]="priority">{{priority}}</mat-option>
+                        <mat-option *ngFor="let priorityKey of priorityKeys" [value]="priorityKey">{{priority[priorityKey]}}</mat-option>
                         <mat-option>None</mat-option>
                     </mat-select>
                 </mat-form-field>

@@ -9,7 +9,7 @@ import { ToDo } from './todo';
 })
 export class TodoService {
 
-  endpoint: string = `http://localhost:4000`;
+  endpoint: string = `http://localhost:4000/api`;
   headers = new HttpHeaders().set('ContentType', 'application/json');
   todos: ToDo[];
 
@@ -21,74 +21,43 @@ export class TodoService {
    }
 
   getTodos(): Observable<any> {
-    /*     const API_URL = `${this.endpoint}/get-todos`;
+    const API_URL = `${this.endpoint}/get-todos`;
     return this.http.get(API_URL).pipe(
       catchError(this.errorMgmt)
-      ); */
-    return of(this.todos);
+      );
   }
 
   addTodo(): Observable<any> {
-    let id: number;
-    if (this.todos.length === 0) {
-      id = 0;
-    } else {
-      id = this.todos[this.todos.length - 1].id + 1;
-    }
-    const todo: ToDo = new ToDo({id: id});
-    this.todos.push(todo)
-    return of(todo)
+    const todo: ToDo = new ToDo();
+    const API_URL = `${this.endpoint}/add-todo`;
+    return this.http.post(API_URL, todo).pipe(
+      catchError(this.errorMgmt)
+    );
   }
 
-  editTodo(todoChange: ToDo): void {
-    console.log("edit comp");
-    if (this.todos.length > 0) {
-      console.log("edit comp");
-      let found: boolean = false;
-      let i: number = 0;
-      while (! found) {
-        console.log(i);
-        if (todoChange.id === this.todos[i].id) {
-          found = true;
-          this.todos[i] = todoChange;
-        }
-        found = i === this.todos.length - 1 ? true : false;
-        i++;
-      }
-    }
-    console.log("edit comp")
+  editTodo(todoChange: ToDo): Observable<any> {
+    const API_URL = `${this.endpoint}/update-todo/${todoChange._id}`;
+    return this.http.put(API_URL, todoChange).pipe(
+      catchError(this.errorMgmt)
+    );
   }
 
-  getTodo(id): Observable<any> {
-/*     const API_URL = `${this.endpoint}/get-todo/${id}`;
+  getTodo(id: string): Observable<any> {
+    const API_URL = `${this.endpoint}/get-todo/${id}`;
     return this.http.get(API_URL).pipe(
       map((res: Response) => {
         return new ToDo(res);
       }),
       catchError(this.errorMgmt)
-    ); */
-    let i = null;
-    this.todos.forEach((value, index) => {
-      if (id === value.id) {
-        i = index;
-      }
-    });
-    if (i === null) {
-      return of({status: 'error', message: 'ToDo id could not be found'});
-    } else {
-      return of(this.todos[i]);
-    }
+    );
   }
 
-  deleteTodo(id) {
-    let i: number = null;
-    this.todos.forEach((value, index) => {
-      if (id === value.id) {
-        i = index;
-      }
-    });
-    console.log("deleteToDo service");
-    this.todos.splice(i, 1);
+  deleteTodo(id: string): Observable<any> {
+    const API_URL = `${this.endpoint}/delete-todo/${id}`;
+    console.log(API_URL);
+    return this.http.delete(API_URL).pipe(
+      catchError(this.errorMgmt)
+    );
   }
 
   errorMgmt(error: HttpErrorResponse) {

@@ -2,7 +2,7 @@ import { Timestamp } from 'rxjs/internal/operators/timestamp';
 
 
 export class ToDo {
-    id: number;
+    _id: string;
     title: string = '';
     fullText: string = '';
     priority: Priority = Priority.middle;

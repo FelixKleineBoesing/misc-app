@@ -24,7 +24,7 @@ export class AppComponent {
     this.opened = window.innerWidth < 768 ? false : true;
     this.resize(window);
   }
- 
+
   ngAfterViewInit() {
     this.sidenav.fixedTopGap = 55;
   }

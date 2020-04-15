@@ -3,9 +3,10 @@ const app = express();
 const todoRoute = express.Router();
 
 
-let ToDo = require("../model/Todo");
+let ToDo = require("../model/ToDo");
 
 todoRoute.route("/add-todo").post((req, res, next) => {
+    console.log(req.body);
     ToDo.create(req.body, (error, data) => {
         if (error) {
             return next(error)
@@ -15,7 +16,7 @@ todoRoute.route("/add-todo").post((req, res, next) => {
     })    
 })
 
-todoRoute.route("/").get((req, res) => {
+todoRoute.route("/get-todos").get((req, res) => {
     ToDo.find((error, data) => {
         if (error) {
             return next(error)
@@ -50,6 +51,7 @@ todoRoute.route("/update-todo/:id").put((req, res, next) => {
 })
 
 todoRoute.route("/delete-todo/:id").delete((req, res, next) => {
+    console.log(req.params.id);
     ToDo.findByIdAndRemove(req.params.id, (error, data) => {
         if (error) {
             return next(door);

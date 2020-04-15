@@ -3,9 +3,6 @@ const Schema = mongoose.Schema;
 
 
 let ToDo = new Schema({
-    id: {
-        type: Number
-    },
     title: {
         type: String
     },
@@ -13,8 +10,8 @@ let ToDo = new Schema({
         type: String
     },
     priority: {
-        type: String,
-        enum: ["Low", "Middle", "High"]
+        type: Number,
+        enum: [0, 1, 2]
     },
     dueTo: {
         type: Date
@@ -28,8 +25,8 @@ let ToDo = new Schema({
     timeLastChange: {
         type: Date
     }
+}, {
+    collection: "todos"
+})
 
-},
-{collection: "todos"})
-
-module.expoorts = mongoose.model('ToDo', ToDo)
+module.exports = mongoose.model('ToDo', ToDo);
