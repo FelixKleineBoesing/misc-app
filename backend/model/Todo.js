@@ -18,13 +18,9 @@ let ToDo = new Schema({
     },
     resolved: {
         type: Boolean
-    },
-    timeCreated: {
-        type: Date
-    },
-    timeLastChange: {
-        type: Date
     }
+}, {
+    timestamps: true
 }, {
     collection: "todos"
 })

@@ -8,15 +8,13 @@ export class ToDo {
     priority: Priority = Priority.middle;
     dueTo = null;
     resolved: boolean = false;
-    timeCreated = null;
-    timeLastChange = null;
+    createdAt = null;
+    updatedAt = null;
 
-    constructor(values: object = {}) {
+    constructor(values: object) {
         Object.assign(this, values);
-        this.timeCreated = Date.now();
     }
 }
-
 export enum Priority {
     low,
     middle,

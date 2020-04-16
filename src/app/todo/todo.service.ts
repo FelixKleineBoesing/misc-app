@@ -28,7 +28,7 @@ export class TodoService {
   }
 
   addTodo(): Observable<any> {
-    const todo: ToDo = new ToDo();
+    const todo: ToDo = new ToDo({});
     const API_URL = `${this.endpoint}/add-todo`;
     return this.http.post(API_URL, todo).pipe(
       catchError(this.errorMgmt)

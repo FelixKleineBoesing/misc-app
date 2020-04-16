@@ -13,21 +13,69 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class TodoComponent implements OnInit {
 
   todos: ToDo[] = [];
+  todoBackUp: ToDo[] = [];
   activeTodo: number;
   Math: any;
   priorityKeys: string[];
   noteForm: FormGroup;
-  priority = Priority;
   cardStringLength = 50;
+  filterString: string = '';
+  categories: object;
+  priority = Priority;
+  order: string = 'asc';
+  chosenCategory: string;
 
   constructor(public fb: FormBuilder,
               private todoApi: TodoService) {
-                this.priorityKeys = Object.keys(this.priority).filter(k => !isNaN(Number(k)));
+                this.priorityKeys = Object.keys(Priority).filter(k => !isNaN(Number(k)));
+                this.categories = {
+                  title: 'Title',
+                  fullText: 'Full Text',
+                  priority: 'Priority',
+                  dueTo: 'due To',
+                  resolved: 'Resolved',
+                  createdAt: 'Created At',
+                  updatedAt: 'Updated At'
+                };
+                this.chosenCategory = Object.keys(this.categories)[0];
               }
 
   ngOnInit(): void {
     this.getTodos();
     this.Math = Math;
+  }
+
+  checkIffilterStringInToDo(todo: ToDo) {
+    return todo.fullText.includes(this.filterString) || todo.title.includes(this.filterString);
+  }
+
+  getObjectKeys(obj: object) {
+    return Object.keys(obj);
+  }
+
+  sortTodos(): void {
+    const coeff = this.order === 'asc' ? 1 : -1;
+    const attr = this.chosenCategory;
+    function sortFunction(a, b) {
+      if (a[attr] < b[attr]) {
+        return -1 * coeff;
+      }
+      if (a[attr] > b[attr]) {
+        return 1 * coeff;
+      }
+      return 0;
+    }
+    console.log(attr);
+    this.todos.sort(sortFunction);
+  }
+
+  alterOrder(): void {
+    if (this.order === 'asc') {
+      this.order = 'desc';
+    } else {
+      this.order = 'asc';
+    }
+    this.sortTodos();
   }
 
   onChanges(): void {
@@ -85,6 +133,7 @@ export class TodoComponent implements OnInit {
   }
 
   editTodo(todoChange: ToDo) {
+    console.log(todoChange);
     if (this.todos.length > 0) {
       let found: boolean = false;
       let i: number = 0;
