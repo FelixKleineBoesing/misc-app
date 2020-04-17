@@ -133,23 +133,25 @@ export class TodoComponent implements OnInit {
   }
 
   editTodo(todoChange: ToDo) {
-    console.log(todoChange);
-    if (this.todos.length > 0) {
-      let found: boolean = false;
-      let i: number = 0;
-      while (! found) {
-        if (todoChange._id === this.todos[i]._id) {
-          found = true;
-          this.todos[i] = todoChange;
+    if (todoChange._id != null) {
+      console.log(todoChange);
+      if (this.todos.length > 0) {
+        let found: boolean = false;
+        let i: number = 0;
+        while (! found) {
+          if (todoChange._id === this.todos[i]._id) {
+            found = true;
+            this.todos[i] = todoChange;
+          }
+          found = i === this.todos.length - 1 ? true : false;
+          i++;
         }
-        found = i === this.todos.length - 1 ? true : false;
-        i++;
       }
+      this.todoApi.editTodo(todoChange).toPromise().then(val => {
+      }).catch(val => {
+        console.log(val);
+      });
     }
-    this.todoApi.editTodo(todoChange).toPromise().then(val => {
-    }).catch(val => {
-      console.log(val);
-    })
   }
 
   updateOpenNote(id: string) {

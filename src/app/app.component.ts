@@ -25,10 +25,6 @@ export class AppComponent {
     this.resize(window);
   }
 
-  ngAfterViewInit() {
-    this.sidenav.fixedTopGap = 55;
-  }
-
   @HostListener('window:resize', ['$event'])
   onResize(event) {
     this.resize(event.target);

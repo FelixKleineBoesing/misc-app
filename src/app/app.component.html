@@ -1,4 +1,3 @@
-<!-- Toolbar -->
 <mat-toolbar color="primary" class="header">
   <div>Felix Admin Tool</div>
   <span class="nav-tool-items">
@@ -7,9 +6,7 @@
 </mat-toolbar>
 
 <mat-sidenav-container>
-  <!-- Sidenav -->
-  <mat-sidenav #sidenav [mode]="isBiggerScreen() ? 'over' : 'side'" [(opened)]="opened" [fixedInViewport]="true"
-    [fixedTopGap]>
+  <mat-sidenav #sidenav [mode]="isBiggerScreen() ? 'over' : 'side'" [(opened)]="opened" [fixedInViewport]="true" fixedTopGap=55>
     <mat-nav-list>
       <a mat-list-item routerLinkActive="active" routerLink="/overview">
         <mat-icon>pie_chart</mat-icon> Overview
@@ -26,7 +23,6 @@
     </mat-nav-list>
   </mat-sidenav>
 
-  <!-- Main content -->
   <mat-sidenav-content>
     <router-outlet></router-outlet>
   </mat-sidenav-content>

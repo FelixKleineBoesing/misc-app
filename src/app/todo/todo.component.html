@@ -8,7 +8,7 @@
                 <input matInput [(ngModel)]="filterString">
             </mat-form-field>
             <mat-form-field>
-                <mat-label>Sort Category</mat-label>
+                <mat-label>Sort card by:</mat-label>
                 <select matNativeControl required [(ngModel)]="chosenCategory">
                     <option *ngFor="let category of getObjectKeys(categories)" [value]="category">{{categories[category]}}</option>
                 </select>
