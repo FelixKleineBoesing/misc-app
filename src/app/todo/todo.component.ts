@@ -65,7 +65,6 @@ export class TodoComponent implements OnInit {
       }
       return 0;
     }
-    console.log(attr);
     this.todos.sort(sortFunction);
   }
 
@@ -75,7 +74,6 @@ export class TodoComponent implements OnInit {
     } else {
       this.order = 'asc';
     }
-    console.log(this.order);
     this.sortTodos();
   }
 

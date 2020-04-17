@@ -54,7 +54,6 @@ export class TodoService {
 
   deleteTodo(id: string): Observable<any> {
     const API_URL = `${this.endpoint}/delete-todo/${id}`;
-    console.log(API_URL);
     return this.http.delete(API_URL).pipe(
       catchError(this.errorMgmt)
     );
