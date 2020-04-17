@@ -17,7 +17,7 @@ Quill.register(block /* or NewBlock */, true);
 export class AppComponent {
   title = 'misc-app';
   opened = true;
-
+  // TODO Sidenav should collaps if no one hovers over and only shows icons otherwise
   @ViewChild('sidenav') sidenav: MatSidenav;
 
   ngOnInit() {

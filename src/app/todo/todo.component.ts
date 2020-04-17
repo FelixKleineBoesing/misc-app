@@ -75,6 +75,7 @@ export class TodoComponent implements OnInit {
     } else {
       this.order = 'asc';
     }
+    console.log(this.order);
     this.sortTodos();
   }
 

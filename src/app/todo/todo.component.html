@@ -13,8 +13,9 @@
                     <option *ngFor="let category of getObjectKeys(categories)" [value]="category">{{categories[category]}}</option>
                 </select>
             </mat-form-field>
-            <button mat-button class="sort-button" (click)="alterOrder()">
-                <mat-icon class="sort-button-icon">sort</mat-icon> 
+            <button mat-button [ngSwitch]="order" class="sort-button" (click)="alterOrder()">
+                <mat-icon *ngSwitchCase="'asc'" class="sort-button-icon">arrow_upwards</mat-icon>
+                <mat-icon *ngSwitchCase="'desc'" class="sort-button-icon">arrow_downwards</mat-icon> 
             </button>
             <ng-container *ngFor="let todo of todos">
                 <mat-card *ngIf="checkIffilterStringInToDo(todo)" (click)="updateOpenNote(todo._id)">
