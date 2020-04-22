@@ -11,77 +11,8 @@ body {
 
 .header {
   justify-content: space-between;
-}
-.user-profile {
-  margin-left: 15px;
-}
-
-.mat-sidenav-container {
-  height: 100%;
-  display: flex;
-  flex: 1 1 auto;
-}
-
-.mat-nav-list .mat-list-item {
-  font-size: 16px;
-}
-
-.nav-tool-items {
-  display: inline-block;
-  margin-right: 13px;
-}
-.user-profile {
-  margin-left: 15px;
-  cursor: pointer;
-}
-.hamburger {
-  visibility: hidden !important;
-}
-.mat-sidenav,
-.mat-sidenav-content {
-  padding: 15px;
-}
-.mat-list-item.active {
-  background: rgba(0, 0, 0, 0.04);
-}
-.mat-sidenav-content {
-  padding: 25px 40px 0;
-}
-.mat-sidenav {
-  background-color: #f2f2f2;
-  width: 250px;
-}
-.header {
   position: sticky;
   position: -webkit-sticky;
   top: 0;
   z-index: 1000;
-}
-
-@media (max-width: 1024px) {
-  .inner-wrapper mat-card {
-    width: 100%;
-  }
-  .mat-sidenav-content {
-    padding: 20px 20px 0;
-  }
-  .misc-bottom-padding mat-label {
-    display: block;
-    padding-bottom: 10px;
-  }
-  .mat-sidenav {
-    width: 230px;
-  }
-  .mat-nav-list .mat-list-item {
-    font-size: 14px;
-  }
-}
-
-@media (max-width: 767px) {
-  .nav-tool-items {
-    margin-right: 0;
-  }
-  .hamburger {
-    visibility: visible !important;
-  }
 }

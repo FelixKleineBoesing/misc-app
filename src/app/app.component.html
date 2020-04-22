@@ -1,23 +1,24 @@
 <mat-toolbar color="primary" class="header">
   <div>Felix Admin Tool</div>
-  <span class="nav-tool-items">
-    <mat-icon (click)="sidenav.toggle()" class="hamburger">menu</mat-icon>
-  </span>
 </mat-toolbar>
 <mat-sidenav-container>
-  <mat-sidenav #sidenav [mode]="isBiggerScreen() ? 'over' : 'side'" [(opened)]="opened" [fixedInViewport]="true" fixedTopGap=55>
+  <mat-sidenav #sidenav mode="side" opened="true" [fixedInViewport]="true" fixedTopGap=55>
      <mat-nav-list>
       <a mat-list-item routerLinkActive="active" routerLink="/overview">
-        <mat-icon>pie_chart</mat-icon> Overview
+        <mat-icon>pie_chart</mat-icon>
+        <ng-container *ngIf="sideNavWidth > 240">Overview</ng-container>
       </a>
       <a mat-list-item routerLinkActive="active" routerLink="/todo">
-        <mat-icon>notes</mat-icon> ToDo List
+        <mat-icon>notes</mat-icon>
+        <ng-container *ngIf="sideNavWidth > 200">ToDo List</ng-container>
       </a>
       <a mat-list-item routerLinkActive="active" routerLink="/weather">
-        <mat-icon>wb_sunny</mat-icon> Weather
+        <mat-icon>wb_sunny</mat-icon>
+        <ng-container *ngIf="sideNavWidth > 200">Weather</ng-container>
       </a>
       <a mat-list-item routerLinkActive="active" routerLink="/rapsberry">
-        <mat-icon>settings</mat-icon> Rapsberry Pi Administration
+        <mat-icon>settings</mat-icon>
+        <ng-container *ngIf="sideNavWidth > 200">Rapsberry Pi Administration</ng-container>        
       </a>
     </mat-nav-list>
   </mat-sidenav>

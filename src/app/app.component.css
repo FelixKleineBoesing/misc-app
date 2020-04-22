@@ -1,10 +1,7 @@
 mat-sidenav mat-icon {
     margin-right: 12px;
   }
-  .hamburger {
-    margin-top: 5px;
-    cursor: pointer;
-  }
+
   .mat-radio-button,
   .mat-radio-group {
     margin-right: 25px;
@@ -19,3 +16,52 @@ mat-sidenav mat-icon {
   .misc-bottom-padding mat-label {
     margin-right: 15px;
   }
+
+  .mat-sidenav-container {
+    height: 100%;
+    display: flex;
+    flex: 1 1 auto;
+  }
+
+  .mat-sidenav-content {
+    padding: 25px 40px 0;
+  }
+  .mat-sidenav {
+    background-color: #f2f2f2;
+    width: 250px;
+  }
+
+  .mat-nav-list .mat-list-item {
+    font-size: 16px;
+  }
+  
+  .mat-sidenav,
+  .mat-sidenav-content {
+    padding: 15px;
+  }
+  .mat-list-item.active {
+    background: rgba(0, 0, 0, 0.10);
+  }
+  
+  .inner-wrapper mat-card {
+    width: 100%;
+  }
+  .mat-sidenav-content {
+    padding: 20px 20px 0;
+  }
+  .misc-bottom-padding mat-label {
+    display: block;
+    padding-bottom: 10px;
+  }
+  .mat-sidenav {
+    width: 80px;
+    transition: width 0.5s;
+  }
+
+  .mat-sidenav:hover {
+    width: 230px;
+  }
+  .mat-nav-list .mat-list-item {
+    font-size: 14px;
+  }
+  
