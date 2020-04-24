@@ -1,12 +1,14 @@
 let express = require('express'),
   path = require('path'),
   mongoose = require('mongoose'),
+  dotenv = require("dotenv"),
   cors = require('cors'),
-  bodyParser = require('body-parser'),
-  dataBaseConfig = require('./database/db');
+  bodyParser = require('body-parser');
+
+dotenv.config();
 
 mongoose.Promise = global.Promise;
-mongoose.connect(dataBaseConfig.db, {
+mongoose.connect(process.env.MONGODB_URL, {
   useNewUrlParser: true
 }).then(() => {
     console.log('Database connected sucessfully ')
@@ -16,8 +18,8 @@ mongoose.connect(dataBaseConfig.db, {
   }
 )
 
-
-const todoRoute = require('../backend/routes/todo.route')
+const todoRouter = require('../backend/routes/todo.route')
+const userRouter = require('../backend/routes/user.route')
 const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -26,7 +28,8 @@ app.use(bodyParser.urlencoded({
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'dist/misc-app')));
 app.use('/', express.static(path.join(__dirname, 'dist/misc-app')));
-app.use('/api', todoRoute)
+app.use('/api', todoRouter)
+app.use('/api', userRouter)
 
 const port = process.env.PORT || 4000;
 const server = app.listen(port, () => {
