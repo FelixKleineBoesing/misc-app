@@ -54,12 +54,7 @@ mat-sidenav mat-icon {
     padding-bottom: 10px;
   }
   .mat-sidenav {
-    width: 80px;
     transition: width 0.5s;
-  }
-
-  .mat-sidenav:hover {
-    width: 230px;
   }
   .mat-nav-list .mat-list-item {
     font-size: 14px;

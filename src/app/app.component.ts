@@ -25,14 +25,16 @@ export class AppComponent {
   }
 
   ngOnInit() {
+    this.shrink();
   }
 
   expand() {
-    this.sideNavWidth = 205;
+    this.sideNavWidth = 250;
   }
 
   shrink() {
-    this.sideNavWidth = 250;
+    console.log("shrink");
+    this.sideNavWidth = 80;
   }
 
 }
