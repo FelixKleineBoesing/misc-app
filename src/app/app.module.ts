@@ -25,6 +25,10 @@ import { RapsberryComponent } from './rapsberry/rapsberry.component';
 import { TodoComponent } from './todo/todo.component';
 import { TodoService } from './todo/todo.service';
 
+import { AdministrationComponent } from './administration/administration.component';
+import { LoginComponent } from './login/login/login.component';
+import { RegisterComponent } from './login/register/register.component';
+
 
 const MATERIAL_COMPONENTS = [
   MatSidenavModule,
@@ -45,7 +49,10 @@ const MATERIAL_COMPONENTS = [
     OverviewComponent,
     WeatherComponent,
     RapsberryComponent,
-    TodoComponent
+    TodoComponent,
+    AdministrationComponent,
+    LoginComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,8 +1,9 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
+
 const Schema = mongoose.Schema;
 
 
-let ToDo = new Schema({
+const ToDoSchema = new Schema({
     title: {
         type: String
     },
@@ -20,9 +21,8 @@ let ToDo = new Schema({
         type: Boolean
     }
 }, {
-    timestamps: true
-}, {
-    collection: "todos"
-})
+    timestamps: true,
+    collection: 'todos'
+});
 
-module.exports = mongoose.model('ToDo', ToDo);
+export const ToDo = mongoose.model('ToDo', ToDoSchema);

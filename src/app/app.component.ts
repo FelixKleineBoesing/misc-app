@@ -33,7 +33,7 @@ export class AppComponent {
   }
 
   shrink() {
-    console.log("shrink");
+    console.log('shrink');
     this.sideNavWidth = 80;
   }
 

@@ -19,10 +19,10 @@ export class TodoComponent implements OnInit {
   priorityKeys: string[];
   noteForm: FormGroup;
   cardStringLength = 50;
-  filterString: string = '';
+  filterString = '';
   categories: object;
   priority = Priority;
-  order: string = 'asc';
+  order = 'asc';
   chosenCategory: string;
 
   constructor(public fb: FormBuilder,
