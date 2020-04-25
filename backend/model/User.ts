@@ -16,6 +16,7 @@ export enum Role {
 
 export interface IUserDocument extends Document {
     name: string;
+    username: string;
     email: string;
     password: string;
     role?: Role;
@@ -30,6 +31,11 @@ const UserSchema = new Schema({
         type: String,
         required: true,
         trim: true
+    },
+    username: {
+        type: String,
+        required: true,
+        unique: true
     },
     email: {
         type: String,

@@ -7,7 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegisterComponent implements OnInit {
 
-  constructor() { }
+  roleKeys: string[];
+
+  constructor() { 
+    this.roleKeys = Object.keys(Role).filter(k => !isNaN(Number(k)));
+  }
 
   ngOnInit(): void {
   }

@@ -1,11 +1,14 @@
 import express from 'express';
 import { auth } from '../middleware/auth';
 import { User } from '../model/User';
-
+import validator from 'validator';
 
 export const userRouter = express.Router();
 
-// TODO middleware auth needs to be added
+// auth middleware
+userRouter.route('/user').get(auth);
+userRouter.route('/user/logout').post(auth);
+
 userRouter.route('/user').get(async ( req: any, res: any ) => {
     res.send(req.user);
 });
@@ -36,13 +39,14 @@ userRouter.route('/user').post(async (req: any, res: any) => {
 
 userRouter.route('/user/login').post(async (req: any, res: any) => {
     try {
-        const { email, password} = req.body;
-        const user = await User.findOne(email);
+        const { emailName, password} = req.body;
+        const user = validator.isEmail(emailName) ? await User.findOne({email: emailName}) : await User.findOne({username: emailName});
+
         if (!user) {
             return res.status(401).send({error: 'Login failed! Check authentication credentials!'});
         }
         user.comparePassword(password);
-        const token = await user.generateAuthToken();
+        const token = user.generateAuthToken();
         res.send({ user, token});
     } catch ( error ) {
         res.status(400).send(error);
