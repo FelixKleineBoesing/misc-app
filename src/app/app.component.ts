@@ -3,6 +3,8 @@ import { MatSidenav } from '@angular/material/sidenav';
 
 import Quill from 'quill';
 
+
+
 const parchment = Quill.import('parchment');
 const block = parchment.query('block');
 block.tagName = 'DIV';
@@ -16,25 +18,16 @@ Quill.register(block /* or NewBlock */, true);
 })
 export class AppComponent {
   title = 'misc-app';
-  sideNavWidth = 250;
-  
+
   @ViewChild('sidenav') sidenav: MatSidenav;
 
   constructor() {
-
   }
 
   ngOnInit() {
-    this.shrink();
+
   }
 
-  expand() {
-    this.sideNavWidth = 250;
-  }
 
-  shrink() {
-    console.log('shrink');
-    this.sideNavWidth = 80;
-  }
 
 }

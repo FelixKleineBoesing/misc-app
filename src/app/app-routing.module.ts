@@ -7,16 +7,18 @@ import { TodoComponent } from './todo/todo.component';
 import { WeatherComponent } from './weather/weather.component';
 import { LoginComponent } from './login/login/login.component';
 import { RegisterComponent } from './login/register/register.component';
+import { AuthGuardService } from './shared/services/authguard.service';
 
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'overview'},
-  { path: 'overview', component: OverviewComponent},
-  { path: 'rapsberry', component: RapsberryComponent},
-  { path: 'todo', component: TodoComponent},
-  { path: 'weather', component: WeatherComponent},
+  { path: '', pathMatch: 'full', redirectTo: 'overview', canActivate: [AuthGuardService]},
+  { path: 'overview', component: OverviewComponent, canActivate: [AuthGuardService]},
+  { path: 'rapsberry', component: RapsberryComponent, canActivate: [AuthGuardService]},
+  { path: 'todo', component: TodoComponent, canActivate: [AuthGuardService]},
+  { path: 'weather', component: WeatherComponent, canActivate: [AuthGuardService]},
   { path: 'login', component: LoginComponent},
-  { path: 'register', component: RegisterComponent}
+  { path: 'register', component: RegisterComponent},
+  { path: '**', redirectTo: ''}
 ];
 
 @NgModule({

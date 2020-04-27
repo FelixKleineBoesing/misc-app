@@ -28,6 +28,8 @@ import { TodoService } from './todo/todo.service';
 import { AdministrationComponent } from './administration/administration.component';
 import { LoginComponent } from './login/login/login.component';
 import { RegisterComponent } from './login/register/register.component';
+import { ToolbarComponent } from './toolbar/toolbar.component';
+import { SidenavComponent } from './sidenav/sidenav.component';
 
 
 const MATERIAL_COMPONENTS = [
@@ -53,6 +55,8 @@ const MATERIAL_COMPONENTS = [
     AdministrationComponent,
     LoginComponent,
     RegisterComponent,
+    ToolbarComponent,
+    SidenavComponent,
   ],
   imports: [
     BrowserModule,

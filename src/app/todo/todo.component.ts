@@ -79,14 +79,12 @@ export class TodoComponent implements OnInit {
 
   onChanges(): void {
     this.noteForm.valueChanges.subscribe(todo => {
-      this.editTodo(todo.ToDo);
+      this.editTodo(todo);
     });
   }
 
   createFormGroup(todo: ToDo): void {
-    this.noteForm = this.fb.group({
-      ToDo: this.fb.group(todo), options: {updateOn: 'change'}
-    });
+    this.noteForm = this.fb.group(todo, {updateOn: 'change'});
     this.onChanges();
   }
 
@@ -120,10 +118,8 @@ export class TodoComponent implements OnInit {
   }
 
   addToDo() {
-    console.log('adding');
     this.todoApi.addTodo().toPromise()
     .then(todo => {
-      console.log(todo);
       this.todos.unshift(todo);
       this.createFormGroup(todo);
     }).catch(val => {
@@ -133,7 +129,6 @@ export class TodoComponent implements OnInit {
 
   editTodo(todoChange: ToDo) {
     if (todoChange._id != null) {
-      console.log(todoChange);
       if (this.todos.length > 0) {
         let found: boolean = false;
         let i: number = 0;
