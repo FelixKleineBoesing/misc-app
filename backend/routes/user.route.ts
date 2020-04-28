@@ -19,16 +19,26 @@ userRouter.route('/user/logout').post(async ( req: any, res: any ) => {
             return token.token !== req.token;
         });
         await req.user.save();
-        res.send();
+        res.status(200).send({msg: 'User successfully deleted'});
     } catch (error) {
-        res.status(500).send(error);
+        res.status(400).send(error);
     }
 });
 
 
+userRouter.route('/user').delete(async (req: any, res: any) => {
+    try {
+        const email = req.body.email;
+        const doc = await User.findOneAndDelete({ email });
+        console.log(doc);
+        res.send();
+    } catch ( error ) {
+        res.status(400).send(error);
+    }
+});
+
 userRouter.route('/user/register').post(async (req: any, res: any) => {
     try {
-        console.log(req.body);
         const user = await User.create(req.body);
         await user.save();
         const token = user.generateAuthToken();
@@ -40,17 +50,24 @@ userRouter.route('/user/register').post(async (req: any, res: any) => {
 });
 
 userRouter.route('/user/login').post(async (req: any, res: any) => {
+    console.log(req.body);
     try {
-        const { emailName, password} = req.body;
-        const user = validator.isEmail(emailName) ? await User.findOne({email: emailName}) : await User.findOne({username: emailName});
-        console.log(user)
+        const { username, password} = req.body;
+        const user = validator.isEmail(username) ? await User.findOne({email: username}) : await User.findOne({ username });
+        console.log(user);
         if (!user) {
             return res.status(401).send({error: 'Login failed! Check authentication credentials!'});
         }
-        user.comparePassword(password);
+        const passwordCorrect = await user.comparePassword(password);
+        console.log("compared Password")
+        if (!passwordCorrect) {
+            throw new Error('Credentials are incorrect');
+        }
         const token = user.generateAuthToken();
+        console.log("generated Token");
         res.send({ user, token});
     } catch ( error ) {
+        console.log(error);
         res.status(400).send(error);
     }
 });

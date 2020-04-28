@@ -3,6 +3,7 @@ import { Role, User } from '../../shared/user';
 import { FormBuilder, FormGroup, Validators, ValidationErrors } from '@angular/forms';
 import { AuthService } from '../../shared/services/authentication.service';
 import { UserService } from 'src/app/shared/services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -14,10 +15,12 @@ export class RegisterComponent implements OnInit {
   roleKeys: string[];
   registerForm: FormGroup;
   role = Role;
+  hide = true;
 
   constructor(private fb: FormBuilder,
               private authService: AuthService,
-              private userService: UserService) {
+              private userService: UserService,
+              private router: Router) {
     this.roleKeys = Object.keys(Role).filter(k => !isNaN(Number(k)));
   }
 
@@ -36,16 +39,11 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit(userData: object) {
-    Object.keys(this.registerForm.controls).forEach(key => {
-      console.log(key)
-      const controlErrors: ValidationErrors = this.registerForm.get(key).errors;
-      if (controlErrors != null) {
-            Object.keys(controlErrors).forEach(keyError => {
-              console.log('Key control: ' + key + ', keyError: ' + keyError + ', err value: ', controlErrors[keyError]);
-            });
-          }
-        });
+    if (this.registerForm.invalid) {
+      return;
+    }
     const user = new User(userData);
     this.userService.registerUser(user);
+    this.router.navigate(['/login']);
   }
 }

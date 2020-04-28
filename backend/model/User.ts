@@ -75,25 +75,30 @@ const UserSchema = new Schema({
 UserSchema.pre('save', function(next: any) {
     const user: any = this;
     if (user.isModified('password')) {
-        user.password = bcrypt.hash(user.password, 8);
+        bcrypt.hash(user.password, 8).then(pw => {
+            user.password = pw;
+            next();
+        });
+    } else {
+        next();
     }
-    next();
 });
 
 UserSchema.methods.generateAuthToken = async function() {
     const user = this;
     const token = jwt.sign({_id: user._id}, PRIVATE_KEY_JWT);
-    user.tokens = user.tokens.concat({token});
+    user.tokens = user.tokens.concat({ token });
     await user.save();
     return token;
 };
 
 UserSchema.methods.comparePassword = async function(password: any) {
-    const isPasswordMatch = await bcrypt.compare(password, this.password);
-    if (!isPasswordMatch) {
-        throw new Error('Invalid login credentials');
-    }
-    return this;
+    console.log(password);
+    console.log(this.password);
+    const user = this;
+    const isPasswordMatch = await bcrypt.compare(password, user.password);
+    console.log(`Password match: ${isPasswordMatch}`);
+    return isPasswordMatch;
 };
 
 export const User = mongoose.model<IUserDocument>('User', UserSchema);

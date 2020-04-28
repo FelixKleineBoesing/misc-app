@@ -7,7 +7,7 @@ import { TodoComponent } from './todo/todo.component';
 import { WeatherComponent } from './weather/weather.component';
 import { LoginComponent } from './login/login/login.component';
 import { RegisterComponent } from './login/register/register.component';
-import { AuthGuardService } from './shared/services/authguard.service';
+import { AuthGuardService } from './shared/services/auth.guard';
 
 
 const routes: Routes = [

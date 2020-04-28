@@ -30,6 +30,7 @@ import { LoginComponent } from './login/login/login.component';
 import { RegisterComponent } from './login/register/register.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
+import { AlertsComponent } from './alerts/alerts.component';
 
 
 const MATERIAL_COMPONENTS = [
@@ -57,6 +58,7 @@ const MATERIAL_COMPONENTS = [
     RegisterComponent,
     ToolbarComponent,
     SidenavComponent,
+    AlertsComponent,
   ],
   imports: [
     BrowserModule,

@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
   roleKeys: string[];
   loginForm: FormGroup;
   return: string = '';
+  hide = true;
 
   constructor(
     private authService: AuthService,
@@ -31,8 +32,14 @@ export class LoginComponent implements OnInit {
   }
 
   login(userData: any) {
-    this.authService.loginUser(userData.userNameMail, userData.password);
-    this.router.navigateByUrl(this.return);
+    if (this.loginForm.invalid) {
+      return;
+    }
+    this.authService.loginUser(userData.userNameMail, userData.password).toPromise().then(user => {
+      this.router.navigateByUrl(this.return);
+    }).catch(error => {
+      console.log(error);
+    });
   }
 
   createFormGroup() {

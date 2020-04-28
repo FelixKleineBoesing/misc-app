@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../shared/services/authentication.service';
 
 @Component({
   selector: 'app-sidenav',
@@ -9,8 +10,16 @@ export class SidenavComponent implements OnInit {
 
   sideNavWidth = 250;
   authenticated = true;
-
-  constructor() { }
+  constructor(
+    private authService: AuthService) {
+      this.authService.currentUser.subscribe(user => {
+        if (!user) {
+          this.authenticated = false;
+        } else {
+          this.authenticated = true;
+        }
+      });
+     }
 
   ngOnInit(): void {
     this.shrink();

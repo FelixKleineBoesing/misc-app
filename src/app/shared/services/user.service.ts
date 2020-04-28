@@ -19,12 +19,10 @@ export class UserService {
       const createdUser = val;
       console.log(createdUser);
     });
-
-    console.log(user);
   }
 
   getAllUsers() {
-    return this.http.get<User[]>(`${this.endpoint}`)
+    return this.http.get<User[]>(`${this.endpoint}`);
   }
 
   isAllowed(route: ActivatedRouteSnapshot): boolean {
