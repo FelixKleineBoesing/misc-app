@@ -38,7 +38,14 @@ export class AuthService {
   }
 
   logoutUser() {
-    localStorage.removeItem('currentUser');
-    this.currentUserSubject.next(null);
+    if (this.currentUserValue == null) {
+      return;
+    }
+    console.log(this.currentUserValue);
+    this.http.post<any>(`${this.endpoint}/logout`, this.currentUserValue).subscribe(val => {
+      console.log(val);
+      localStorage.removeItem('currentUser');
+      this.currentUserSubject.next(null);
+    })
   }
 }
