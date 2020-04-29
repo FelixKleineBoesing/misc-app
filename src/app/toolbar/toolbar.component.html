@@ -1,6 +1,11 @@
 <mat-toolbar color="primary" class="header">
-    <div>Felix Admin Tool</div>
-    <button mat-button (click)="logout()">
-      <mat-icon class="logout-icon" aria-hidden="false" aria-label="Logout icon">subdirectory_arrow_left</mat-icon>
+    <div class="toolbar-home" routerLink="/">Felix Admin Tool</div>
+    <mat-menu #appMenu="matMenu">
+      <button mat-menu-item routerLink="/settings"><mat-icon>settings</mat-icon>Settings</button>
+      <button mat-menu-item routerLink="/help"><mat-icon>help</mat-icon>Help</button>
+      <button mat-menu-item (click)="logout()"><mat-icon>subdirectory_arrow_left</mat-icon>Logout</button>
+    </mat-menu>
+    <button class="menu-button" mat-icon-button [matMenuTriggerFor]="appMenu">
+      <mat-icon>account_circle</mat-icon>
     </button>
-  </mat-toolbar>
+</mat-toolbar>

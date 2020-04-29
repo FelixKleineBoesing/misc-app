@@ -27,7 +27,4 @@ export class AppComponent {
   ngOnInit() {
 
   }
-
-
-
 }

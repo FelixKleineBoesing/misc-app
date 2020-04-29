@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { QuillModule } from 'ngx-quill';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule} from '@angular/forms';
@@ -16,6 +16,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatMenuModule } from '@angular/material/menu';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -31,6 +32,10 @@ import { RegisterComponent } from './login/register/register.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { AlertsComponent } from './alerts/alerts.component';
+import { HelpComponent } from './toolbar/help/help.component';
+import { SettingsComponent } from './toolbar/settings/settings.component';
+import { JwtInterceptor } from './shared/interceptors/jwt.interceptors';
+import { ErrorInterceptor } from './shared/interceptors/error.interceptor';
 
 
 const MATERIAL_COMPONENTS = [
@@ -43,7 +48,8 @@ const MATERIAL_COMPONENTS = [
   MatSelectModule,
   MatDatepickerModule,
   MatCheckboxModule,
-  MatNativeDateModule
+  MatNativeDateModule,
+  MatMenuModule
 ]
 
 @NgModule({
@@ -59,6 +65,8 @@ const MATERIAL_COMPONENTS = [
     ToolbarComponent,
     SidenavComponent,
     AlertsComponent,
+    HelpComponent,
+    SettingsComponent,
   ],
   imports: [
     BrowserModule,
@@ -70,7 +78,10 @@ const MATERIAL_COMPONENTS = [
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [TodoService],
-  bootstrap: [AppComponent]
+  providers: [TodoService,
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
+],
+  bootstrap: [AppComponent],
 })
 export class AppModule { }
