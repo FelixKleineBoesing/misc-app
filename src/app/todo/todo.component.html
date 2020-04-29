@@ -21,9 +21,9 @@
             <ng-container *ngFor="let todo of todos">
                 <mat-card *ngIf="checkIffilterStringInToDo(todo)" (click)="updateOpenNote(todo._id)">
                     <mat-card-title>{{ todo.title }}</mat-card-title>
-                    <mat-card-content>{{
-            getSubStringForCard(todo.fullText)
-          }}</mat-card-content>
+                    <mat-card-content>
+                        <div [innerHTML]="getSubStringForCard(todo.fullText)"></div>
+                    </mat-card-content>
                     <mat-card-actions>
                         <button mat-button (click)="deleteToDo(todo._id)">
                             <mat-icon class btnText>delete</mat-icon>

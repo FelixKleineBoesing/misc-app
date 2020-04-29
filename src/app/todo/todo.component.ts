@@ -46,7 +46,17 @@ export class TodoComponent implements OnInit {
   }
 
   checkIffilterStringInToDo(todo: ToDo) {
-    return todo.fullText.includes(this.filterString) || todo.title.includes(this.filterString);
+    if (this.filterString === '') {
+      return true;
+    }
+    let inString = false;
+    if (todo.fullText != null) {
+      inString = inString || todo.fullText.includes(this.filterString);
+    }
+    if (todo.title != null) {
+      inString = inString || todo.title.includes(this.filterString);
+    }
+    return inString;
   }
 
   getObjectKeys(obj: object) {
@@ -109,6 +119,7 @@ export class TodoComponent implements OnInit {
     this.todoApi.getTodos().toPromise().then(data => {
       this.todos = data;
       this.activeTodo = this.todos.length === 0 ? null : 0;
+      console.log(this.todos.length)
       if (this.todos.length > 0) {
         this.createFormGroup(this.todos[0]);
       }
@@ -158,6 +169,8 @@ export class TodoComponent implements OnInit {
   }
 
   getSubStringForCard(text: string) {
-    return text.substring(0, Math.min(text.length, this.cardStringLength)).replace(/<[^>]*>/g, '');
+    if (text != null){
+      return text.substring(0, Math.min(text.length, this.cardStringLength)); //.replace(/<[^>]*>/g, '')
+    }
   }
 }
