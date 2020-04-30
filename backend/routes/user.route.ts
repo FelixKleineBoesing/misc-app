@@ -67,11 +67,7 @@ userRouter.route('/user/register').post(async (req: any, res: any) => {
 userRouter.route('/user/login').post(async (req: any, res: any) => {
     try {
         const { username, password} = req.body;
-        console.log(username),
-        console.log(await User.findOne({email: username}));
-        
         const user = validator.isEmail(username) ? await User.findOne({email: username}) : await User.findOne({ username });
-        console.log(user)
         if (!user) {
             return res.status(401).send({error: 'Login failed! Check authentication credentials!'});
         }
@@ -92,7 +88,12 @@ userRouter.route('/user/is-allowed').post(async (req: any, res: any) => {
         const role: Role = req.user.role;
         const route: string = req.body.route;
         const allowedRoutes: string[] = allowedRoutesPerRole[role];
-        const allowed =  allowedRoutes.includes(route) ? true : false;
+        console.log(allowedRoutes.includes(route));
+        console.log(allowedRoutes)
+        console.log(allowedRoutesPerRole)
+        console.log(route)
+        console.log(req.body)
+        const allowed = allowedRoutes.includes(route) ? true : false;
         res.status(200).send({user: req.user, allowed});
     } catch (error) {
         console.log(error);

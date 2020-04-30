@@ -26,12 +26,9 @@ export class UserService {
     return this.http.get<User[]>(`${this.endpoint}`);
   }
 
-  async isAllowed(route: ActivatedRouteSnapshot) {
-    console.log(route.url[0].path);
+  isAllowed(route: ActivatedRouteSnapshot) {
     // backend should return whether the route is allowed for the user role
-    return await this.http.post<any>(`${this.endpoint}/is-allowed`, {route: route.toString}).toPromise().then(val => {
-      return val.allowed;
-    });
+    return this.http.post<any>(`${this.endpoint}/is-allowed`, {route: route.url[0].path});
   }
 
   removeUser(userID: string) {

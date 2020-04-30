@@ -93,8 +93,6 @@ UserSchema.methods.generateAuthToken = async function() {
 
 UserSchema.methods.comparePassword = async function(password: any) {
     const user = this;
-    console.log(password)
-    console.log(user.password)
     const isPasswordMatch = await bcrypt.compare(password, user.password);
     return isPasswordMatch;
 };

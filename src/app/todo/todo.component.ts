@@ -119,7 +119,6 @@ export class TodoComponent implements OnInit {
     this.todoApi.getTodos().toPromise().then(data => {
       this.todos = data;
       this.activeTodo = this.todos.length === 0 ? null : 0;
-      console.log(this.todos.length)
       if (this.todos.length > 0) {
         this.createFormGroup(this.todos[0]);
       }
