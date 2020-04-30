@@ -30,22 +30,19 @@ export class AuthService {
   loginUser(username: string, password: string): Observable<object> {
     return this.http.post<any>(`${this.endpoint}/login`, { username, password }).pipe(
       map(user => {
-        console.log(user)
         localStorage.setItem('currentUser', JSON.stringify(user));
         this.currentUserSubject.next(user);
         return user;
       }));
   }
 
-  logoutUser() {
+  logoutUser(): void {
     if (this.currentUserValue == null) {
       return;
     }
-    console.log(this.currentUserValue);
-    this.http.post<any>(`${this.endpoint}/logout`, this.currentUserValue).subscribe(val => {
-      console.log(val);
+    this.http.post<any>(`${this.endpoint}/logout`, this.currentUserValue).toPromise().then(val => {
       localStorage.removeItem('currentUser');
       this.currentUserSubject.next(null);
-    })
+    });
   }
 }

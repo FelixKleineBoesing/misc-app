@@ -9,9 +9,19 @@ import { Router } from '@angular/router';
 })
 export class ToolbarComponent implements OnInit {
 
+  authenticated = false;
+
   constructor(
     private authService: AuthService,
-    private router: Router) { }
+    private router: Router) {
+      this.authService.currentUser.subscribe(user => {
+        if (!user) {
+          this.authenticated = false;
+        } else {
+          this.authenticated = true;
+        }
+      });
+     }
 
   ngOnInit(): void {
   }

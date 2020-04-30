@@ -8,7 +8,6 @@ const Schema = mongoose.Schema;
 
 
 export enum Role {
-    guest,
     user,
     admin
 }
@@ -93,11 +92,10 @@ UserSchema.methods.generateAuthToken = async function() {
 };
 
 UserSchema.methods.comparePassword = async function(password: any) {
-    console.log(password);
-    console.log(this.password);
     const user = this;
+    console.log(password)
+    console.log(user.password)
     const isPasswordMatch = await bcrypt.compare(password, user.password);
-    console.log(`Password match: ${isPasswordMatch}`);
     return isPasswordMatch;
 };
 

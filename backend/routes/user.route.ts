@@ -1,14 +1,16 @@
 import express from 'express';
 import { auth } from '../middleware/auth';
-import { User } from '../model/User';
+import { User, Role } from '../model/User';
 import validator from 'validator';
+import { allowedRoutesPerRole } from '../allowedroutes';
 
 export const userRouter = express.Router();
 
 // auth middleware
 userRouter.route('/user').get(auth);
 userRouter.route('/user/logout').post(auth);
-userRouter.route('/user/logoutall').post(auth);
+userRouter.route('/user/logout-all').post(auth);
+userRouter.route('/user/is-allowed').post(auth);
 
 userRouter.route('/user').get(async ( req: any, res: any ) => {
     res.send(req.user);
@@ -27,7 +29,7 @@ userRouter.route('/user/logout').post( async ( req: any, res: any ) => {
     }
 });
 
-userRouter.route('/userlogoutall').post( async ( req: any, res: any ) => {
+userRouter.route('/user/logout-all').post( async ( req: any, res: any ) => {
     // Log user out of all devices
     try {
         req.user.tokens.splice(0, req.user.tokens.length);
@@ -65,13 +67,17 @@ userRouter.route('/user/register').post(async (req: any, res: any) => {
 userRouter.route('/user/login').post(async (req: any, res: any) => {
     try {
         const { username, password} = req.body;
+        console.log(username),
+        console.log(await User.findOne({email: username}));
+        
         const user = validator.isEmail(username) ? await User.findOne({email: username}) : await User.findOne({ username });
+        console.log(user)
         if (!user) {
             return res.status(401).send({error: 'Login failed! Check authentication credentials!'});
         }
         const passwordCorrect = await user.comparePassword(password);
         if (!passwordCorrect) {
-            throw new Error('Credentials are incorrect');
+            return res.status(401).send({error: 'Login failed! Check authentication credentials!'});
         }
         const token = await user.generateAuthToken();
         res.send({ user, token});
@@ -81,12 +87,13 @@ userRouter.route('/user/login').post(async (req: any, res: any) => {
     }
 });
 
-userRouter.route('/user/isAllowed').post(async (req: any, res: any) => {
+userRouter.route('/user/is-allowed').post(async (req: any, res: any) => {
     try {
-        const user = await User.create(req.body);
-        await user.save();
-        const token = user.generateAuthToken();
-        res.status(201).send({user, token});
+        const role: Role = req.user.role;
+        const route: string = req.body.route;
+        const allowedRoutes: string[] = allowedRoutesPerRole[role];
+        const allowed =  allowedRoutes.includes(route) ? true : false;
+        res.status(200).send({user: req.user, allowed});
     } catch (error) {
         console.log(error);
         res.status(400).send(error);

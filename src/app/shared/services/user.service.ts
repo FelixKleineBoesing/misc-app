@@ -3,6 +3,7 @@ import { User } from '../user';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { ActivatedRouteSnapshot } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -25,11 +26,12 @@ export class UserService {
     return this.http.get<User[]>(`${this.endpoint}`);
   }
 
-  isAllowed(route: ActivatedRouteSnapshot): boolean {
+  async isAllowed(route: ActivatedRouteSnapshot) {
+    console.log(route.url[0].path);
     // backend should return whether the route is allowed for the user role
-    console.log(route);
-    console.log('isAllowed');
-    return true;
+    return await this.http.post<any>(`${this.endpoint}/is-allowed`, {route: route.toString}).toPromise().then(val => {
+      return val.allowed;
+    });
   }
 
   removeUser(userID: string) {

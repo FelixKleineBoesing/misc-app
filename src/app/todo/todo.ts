@@ -10,6 +10,7 @@ export class ToDo {
     resolved: boolean = false;
     createdAt = null;
     updatedAt = null;
+    userID = null;
 
     constructor(values: object) {
         Object.assign(this, values);

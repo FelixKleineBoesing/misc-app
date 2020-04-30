@@ -19,7 +19,15 @@ const ToDoSchema = new Schema({
     },
     resolved: {
         type: Boolean
-    }
+    },
+    userID: {
+        type: String
+    },
+    sharedWith: [{
+        userID: {
+            type: String
+        }
+    }]
 }, {
     timestamps: true,
     collection: 'todos'

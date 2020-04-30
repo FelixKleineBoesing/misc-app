@@ -170,7 +170,7 @@ export class TodoComponent implements OnInit {
 
   getSubStringForCard(text: string) {
     if (text != null){
-      return text.substring(0, Math.min(text.length, this.cardStringLength)); //.replace(/<[^>]*>/g, '')
+      return text.substring(0, Math.min(text.length, this.cardStringLength));
     }
   }
 }

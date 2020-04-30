@@ -1,5 +1,5 @@
 <mat-sidenav-container>
-    <mat-sidenav *ngIf="authenticated" #sidenav mode="side" opened="true" [fixedInViewport]="true" 
+  <mat-sidenav *ngIf="authenticated" #sidenav mode="side" opened="true" [fixedInViewport]="true" 
     fixedTopGap=55 [ngStyle]="{ 'width.px': sideNavWidth }" (mouseenter)="expand()" 
     (mouseleave)="shrink()">
        <mat-nav-list>
@@ -24,8 +24,8 @@
           <ng-container *ngIf="sideNavWidth > 200">User Administration</ng-container>        
         </a>
       </mat-nav-list>
-    </mat-sidenav>
-    <mat-sidenav-content>
-      <router-outlet></router-outlet>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>
