@@ -3,6 +3,7 @@ import { Role } from '../../shared/user';
 import { AuthService } from '../../shared/services/authentication.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AlertsComponent } from 'src/app/shared/alerts/alerts.component';
 
 @Component({
   selector: 'app-login',
@@ -12,14 +13,15 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class LoginComponent implements OnInit {
   roleKeys: string[];
   loginForm: FormGroup;
-  return: string = '';
+  return = '';
   hide = true;
 
   constructor(
     private authService: AuthService,
     private fb: FormBuilder,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private alerts: AlertsComponent
   ) {
     this.roleKeys = Object.keys(Role).filter((k) => !isNaN(Number(k)));
   }
@@ -28,7 +30,7 @@ export class LoginComponent implements OnInit {
     this.createFormGroup();
     this.route.queryParams
       .toPromise()
-      .then((params) => (this.return = params['return'] || '/'));
+      .then((params) => (this.return = params.return || '/'));
   }
 
   login(userData: any) {
