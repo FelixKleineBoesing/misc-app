@@ -21,7 +21,7 @@ export class TodoService {
    }
 
   getTodos(): Observable<any> {
-    const API_URL = `${this.endpoint}/get-todos`;
+    const API_URL = `${this.endpoint}/todo/get-all`;
     return this.http.get(API_URL).pipe(
       catchError(this.errorMgmt)
       );
@@ -29,21 +29,21 @@ export class TodoService {
 
   addTodo(): Observable<any> {
     const todo: ToDo = new ToDo({});
-    const API_URL = `${this.endpoint}/add-todo`;
+    const API_URL = `${this.endpoint}/todo`;
     return this.http.post(API_URL, todo).pipe(
       catchError(this.errorMgmt)
     );
   }
 
   editTodo(todoChange: ToDo): Observable<any> {
-    const API_URL = `${this.endpoint}/update-todo/${todoChange._id}`;
+    const API_URL = `${this.endpoint}/todo/${todoChange._id}`;
     return this.http.put(API_URL, todoChange).pipe(
       catchError(this.errorMgmt)
     );
   }
 
   getTodo(id: string): Observable<any> {
-    const API_URL = `${this.endpoint}/get-todo/${id}`;
+    const API_URL = `${this.endpoint}/todo/${id}`;
     return this.http.get(API_URL).pipe(
       map((res: Response) => {
         return new ToDo(res);
@@ -53,7 +53,7 @@ export class TodoService {
   }
 
   deleteTodo(id: string): Observable<any> {
-    const API_URL = `${this.endpoint}/delete-todo/${id}`;
+    const API_URL = `${this.endpoint}/todo/${id}`;
     return this.http.delete(API_URL).pipe(
       catchError(this.errorMgmt)
     );

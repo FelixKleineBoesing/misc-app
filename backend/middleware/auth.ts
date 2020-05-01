@@ -3,9 +3,9 @@ import { User } from '../model/User';
 import { PRIVATE_KEY_JWT } from '../config';
 
 export const auth = async (req: any, res: any, next: any) => {
-    console.log(req)
     const token = req.header('Authorization').replace('Bearer ', '');
     const data = jwt.verify(token, PRIVATE_KEY_JWT);
+    console.log(token);
     try {
         const user = await User.findOne({_id: data, 'tokens.token': token});
         if (!user) {

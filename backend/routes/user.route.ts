@@ -24,7 +24,7 @@ userRouter.route('/user/logout').post( async ( req: any, res: any ) => {
         await req.user.save();
         res.status(200).send({msg: 'User successfully signed out'});
     } catch (error) {
-        console.log(error)
+        console.log(error);
         res.status(400).send(error);
     }
 });

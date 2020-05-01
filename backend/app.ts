@@ -35,7 +35,7 @@ app.use('/api', userRouter);
 const port = process.env.EXPRESS_PORT || 4000;
 const server = app.listen(port, () => {
   console.log('Connected to port ' + port);
-})
+});
 
 app.use((err: any, req: any, res: any, next: any) => {
   console.error(err.message);

@@ -4,7 +4,6 @@ import { TodoService } from './todo.service';
 import { ValueConverter } from '@angular/compiler/src/render3/view/template';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
-
 @Component({
   selector: 'app-todo',
   templateUrl: './todo.component.html',
@@ -24,6 +23,7 @@ export class TodoComponent implements OnInit {
   priority = Priority;
   order = 'asc';
   chosenCategory: string;
+  selectedTodoIndex: number = null;
 
   constructor(public fb: FormBuilder,
               private todoApi: TodoService) {
@@ -63,6 +63,16 @@ export class TodoComponent implements OnInit {
     return Object.keys(obj);
   }
 
+  shareTodo(todoID: string) {
+    console.log(todoID);
+  }
+
+  // formatDate(timeStamp) {
+  //   const date = moment(timeStamp).format('YYYY-MM-DD');
+  //   console.log(date);
+  //   return date;
+  // }
+
   sortTodos(): void {
     const coeff = this.order === 'asc' ? 1 : -1;
     const attr = this.chosenCategory;
@@ -95,6 +105,7 @@ export class TodoComponent implements OnInit {
 
   createFormGroup(todo: ToDo): void {
     this.noteForm = this.fb.group(todo, {updateOn: 'change'});
+    console.log(this.noteForm);
     this.onChanges();
   }
 
@@ -113,6 +124,9 @@ export class TodoComponent implements OnInit {
       this.todos.splice(i, 1);
       this.resetForm();
     });
+    if (this.todos.length === 0) {
+      this.selectedTodoIndex = null;
+    }
   }
 
   getTodos() {
@@ -158,12 +172,19 @@ export class TodoComponent implements OnInit {
     }
   }
 
+  getCreatedAt() {
+    if (this.selectedTodoIndex != null) {
+      return this.todos[this.selectedTodoIndex]
+    }
+  }
+
   updateOpenNote(id: string) {
     this.todos.forEach((value, index) => {
       if (id === value._id) {
         this.activeTodo = index;
       }
     });
+    this.selectedTodoIndex = this.activeTodo;
     this.createFormGroup(this.todos[this.activeTodo]);
   }
 
