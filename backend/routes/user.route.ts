@@ -2,7 +2,7 @@ import express from 'express';
 import { auth } from '../middleware/auth';
 import { User, Role } from '../model/User';
 import validator from 'validator';
-import { allowedRoutesPerRole } from '../allowedroutes';
+import { allowedRoutesPerRole } from '../misc/allowedRoutes';
 
 export const userRouter = express.Router();
 
