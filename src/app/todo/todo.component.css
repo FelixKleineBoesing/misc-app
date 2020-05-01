@@ -9,10 +9,6 @@
     margin-bottom: 10px;
 }
 
-mat-sidenav {
-    width: 250px
-}
-
 mat-card {
     margin-bottom: 10px;
     cursor: pointer;

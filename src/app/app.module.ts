@@ -37,6 +37,8 @@ import { HelpComponent } from './toolbar/help/help.component';
 import { SettingsComponent } from './toolbar/settings/settings.component';
 import { JwtInterceptor } from './shared/interceptors/jwt.interceptors';
 import { ErrorInterceptor } from './shared/interceptors/error.interceptor';
+import { ProfileComponent } from './toolbar/settings/profile/profile.component';
+import { NotificationsComponent } from './toolbar/settings/notifications/notifications.component';
 
 
 const MATERIAL_COMPONENTS = [
@@ -69,6 +71,8 @@ const MATERIAL_COMPONENTS = [
     AlertsComponent,
     HelpComponent,
     SettingsComponent,
+    ProfileComponent,
+    NotificationsComponent
   ],
   imports: [
     BrowserModule,

@@ -11,6 +11,8 @@ import { AuthGuardService } from './shared/services/auth.guard';
 import { HelpComponent } from './toolbar/help/help.component';
 import { SettingsComponent } from './toolbar/settings/settings.component';
 import { AdministrationComponent } from './administration/administration.component';
+import { ProfileComponent } from './toolbar/settings/profile/profile.component';
+import { NotificationsComponent } from './toolbar/settings/notifications/notifications.component';
 
 
 const routes: Routes = [
@@ -23,6 +25,8 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'settings', component: SettingsComponent },
+  { path: 'settings/profile', component: ProfileComponent},
+  { path: 'settings/notifications', component: NotificationsComponent},
   { path: 'help', component: HelpComponent},
   { path: '**', redirectTo: ''}
 ];

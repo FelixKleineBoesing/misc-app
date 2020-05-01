@@ -1,1 +1,11 @@
-<p>settings works!</p>
+<mat-sidenav-container class="todo-sidenav">
+    <mat-sidenav mode="side" opened>
+        <mat-nav-list>
+            <a mat-list-item routerLink="/settings/profile">Profile</a>
+            <a mat-list-item routerLink="/settings/notifications">notifications</a>
+        </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>
