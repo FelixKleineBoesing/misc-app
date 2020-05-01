@@ -17,6 +17,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatMenuModule } from '@angular/material/menu';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -31,7 +32,7 @@ import { LoginComponent } from './login/login/login.component';
 import { RegisterComponent } from './login/register/register.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
-import { AlertsComponent } from './alerts/alerts.component';
+import { AlertsComponent } from './shared/alerts/alerts.component';
 import { HelpComponent } from './toolbar/help/help.component';
 import { SettingsComponent } from './toolbar/settings/settings.component';
 import { JwtInterceptor } from './shared/interceptors/jwt.interceptors';
@@ -49,7 +50,8 @@ const MATERIAL_COMPONENTS = [
   MatDatepickerModule,
   MatCheckboxModule,
   MatNativeDateModule,
-  MatMenuModule
+  MatMenuModule, 
+  MatSnackBarModule
 ]
 
 @NgModule({

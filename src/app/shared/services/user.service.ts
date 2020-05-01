@@ -27,7 +27,6 @@ export class UserService {
   }
 
   isAllowed(route: ActivatedRouteSnapshot) {
-    // backend should return whether the route is allowed for the user role
     return this.http.post<any>(`${this.endpoint}/is-allowed`, {route: route.url[0].path});
   }
 
